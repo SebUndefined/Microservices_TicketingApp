@@ -1,16 +1,15 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import request from 'supertest';
-import mongoose, { Collection } from 'mongoose';
+import mongoose from 'mongoose';
 import { app } from '../app';
 
 declare global {
     namespace NodeJS {
         interface Global {
-            signin(): Promise<string[]>
+            signin(): Promise<string[]>;
         }
     }
 }
-
 
 let mongo: any;
 
