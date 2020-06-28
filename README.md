@@ -27,12 +27,12 @@ kubectl port-forward nats-depl-6fcc4b596b-2rwbd 4222:4222
 
 Result
 
-```bash 
+```bash
 $ kubectl port-forward nats-depl-6fcc4b596b-2rwbd 4222:4222
 Forwarding from 127.0.0.1:4222 -> 4222
 Forwarding from [::1]:4222 -> 4222
 Handling connection for 4222
 ```
 
-Monitoring NATS 
+Monitoring NATS
 localhost:8222/streaming

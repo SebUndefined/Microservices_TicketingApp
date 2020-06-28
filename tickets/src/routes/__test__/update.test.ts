@@ -2,6 +2,9 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
 import mongoose from 'mongoose';
+import { natsWrapper } from '../../nats-wrapper';
+
+jest.mock('../../nats-wrapper.ts');
 
 it('returns a 404 if the provided id does not exist', async () => {
     const id = new mongoose.Types.ObjectId().toHexString();
@@ -86,6 +89,27 @@ it('updates the ticket provided', async () => {
     const ticketResponse = await request(app)
         .get(`/api/tickets/${response.body.id}`)
         .send();
-        expect(ticketResponse.body.title).toEqual('This is a ticket 2233')
-        expect(ticketResponse.body.price).toEqual(29.67)
+    expect(ticketResponse.body.title).toEqual('This is a ticket 2233');
+    expect(ticketResponse.body.price).toEqual(29.67);
+});
+
+it('publishes an event', async () => {
+    const cookie = global.signin();
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', cookie)
+        .send({
+            title: 'This is a ticket',
+            price: 23.45,
+        });
+    await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .set('Cookie', cookie)
+        .send({
+            title: 'This is a ticket 2233',
+            price: 29.67,
+        })
+        .expect(200);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
