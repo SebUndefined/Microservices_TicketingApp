@@ -2,6 +2,8 @@
 
 kubectl create secret generic jwt-secret --from-literal=JWT_KEY=[yourSecret]
 
+kubectl create secret generic stripe-secret --from-literal STRIPE_KEY=[your_secret_stripe_key]
+
 Port forwarding with kubernetees
 
 1. Get pods
