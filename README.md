@@ -1,5 +1,7 @@
 # Microservices_TicketingApp
 
+Install Ingress https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/
+
 kubectl create secret generic jwt-secret --from-literal=JWT_KEY=[yourSecret]
 
 kubectl create secret generic stripe-secret --from-literal STRIPE_KEY=[your_secret_stripe_key]
